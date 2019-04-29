@@ -12,4 +12,4 @@ All of the dependencies can be grabbed with:
 
     pip3 install -r dependencies.txt
 
-Then run main.py..      And you should be into it
+Then run main.py.. And you should be into it
