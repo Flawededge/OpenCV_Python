@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Chris Diggle</author>
  <class>OpenCVThresholder</class>
  <widget class="QDialog" name="OpenCVThresholder">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
-    <height>709</height>
+    <width>947</width>
+    <height>678</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +21,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>EzPlot</string>
+   <string>Assignment 3</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>

@@ -2,17 +2,17 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.12.1
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_OpenCVThresholder(object):
     def setupUi(self, OpenCVThresholder):
         OpenCVThresholder.setObjectName("OpenCVThresholder")
-        OpenCVThresholder.resize(915, 709)
+        OpenCVThresholder.setEnabled(True)
+        OpenCVThresholder.resize(947, 678)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -161,7 +161,7 @@ class Ui_OpenCVThresholder(object):
 
     def retranslateUi(self, OpenCVThresholder):
         _translate = QtCore.QCoreApplication.translate
-        OpenCVThresholder.setWindowTitle(_translate("OpenCVThresholder", "EzPlot"))
+        OpenCVThresholder.setWindowTitle(_translate("OpenCVThresholder", "Assignment 3"))
         self.Input.setTitle(_translate("OpenCVThresholder", "Input Image"))
         self.inImage.setText(_translate("OpenCVThresholder", "No Image Loaded"))
         self.Output.setTitle(_translate("OpenCVThresholder", "Output Image"))
@@ -172,5 +172,4 @@ class Ui_OpenCVThresholder(object):
         self.bClear.setText(_translate("OpenCVThresholder", "Clear"))
         self.bAdd.setText(_translate("OpenCVThresholder", "Add"))
         self.bSave.setText(_translate("OpenCVThresholder", "Save"))
-
 

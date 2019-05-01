@@ -1,4 +1,7 @@
-# The real imports
+# # Compile code
+# pyinstaller -y -w -i "C:/Users/Ben/PycharmProjects/OpenCV_Python/example.ico" --add-data "C:/Users/Ben/PycharmProjects/OpenCV_Python/example.png";"." --add-data "C:/Users/Ben/PycharmProjects/OpenCV_Python/HSV.png";"." "C:/Users/Ben/PycharmProjects/OpenCV_Python/main.py"
+
+
 import sys
 from PyQt5 import QtWidgets, QtGui
 from mainwindow import Ui_OpenCVThresholder
@@ -18,7 +21,7 @@ class MainPlotGui(Ui_OpenCVThresholder):
         self.load_image()
         self.update_outline()
 
-        self.lColorBar.setPixmap(QtGui.QPixmap("YOBFy.png"))
+        self.lColorBar.setPixmap(QtGui.QPixmap("HSV.png"))
         self.sLower.sliderMoved.connect(self.upper_slider)  # Connect the moving slider to update the outline
         self.sUpper.sliderMoved.connect(self.lower_slider)
         self.bClear.pressed.connect(self.clear_mask)
@@ -27,8 +30,12 @@ class MainPlotGui(Ui_OpenCVThresholder):
         self.bSave.pressed.connect(self.save_file)
 
     def load_image(self):  # Loads image from a filename
+        if not (self.currentImage.endswith('.png') or self.currentImage.endswith('.jpg')):
+            print("Incorrect file type!")
+            return
         print(f"Loading '{self.currentImage}'")
         self.curFileImage = cv2.imread(self.currentImage)  # Load the image
+        self.mask = None
         self.curFileImage = cv2.cvtColor(self.curFileImage, cv2.COLOR_BGR2HSV)  # Convert to HSV
         self.disp_image(self.curFileImage, 0)  # Display the image on the left side
 
