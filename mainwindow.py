@@ -90,6 +90,9 @@ class Ui_OpenCVThresholder(object):
         self.bSave = QtWidgets.QPushButton(self.groupBox)
         self.bSave.setObjectName("bSave")
         self.File.addWidget(self.bSave)
+        self.bMeme = QtWidgets.QPushButton(self.groupBox)
+        self.bMeme.setObjectName("bMeme")
+        self.File.addWidget(self.bMeme)
         self.userStuff.setLayout(0, QtWidgets.QFormLayout.FieldRole, self.File)
         self.verticalLayout.addLayout(self.userStuff)
         self.verticalLayout_2.addWidget(self.groupBox)
@@ -108,4 +111,5 @@ class Ui_OpenCVThresholder(object):
         self.label.setText(_translate("OpenCVThresholder", "File Controls"))
         self.bLoad.setText(_translate("OpenCVThresholder", "Load"))
         self.bSave.setText(_translate("OpenCVThresholder", "Save"))
+        self.bMeme.setText(_translate("OpenCVThresholder", "Meme"))
 

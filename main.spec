@@ -3,10 +3,10 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['C:/Users/Ben/PycharmProjects/OpenCV_Python/main.py'],
              pathex=['C:\\Users\\Ben\\PycharmProjects\\OpenCV_Python'],
              binaries=[],
-             datas=[],
+             datas=[('C:/Users/Ben/PycharmProjects/OpenCV_Python/referenceImage.png', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -26,7 +26,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True )
+          console=True , icon='C:\\Users\\Ben\\PycharmProjects\\OpenCV_Python\\sausage.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

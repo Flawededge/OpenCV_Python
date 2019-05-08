@@ -6,6 +6,7 @@ import tsp
 
 
 def process(image, logging=0):
+    sausages = []
     start = timeit.default_timer()
     new_image = inRange(image, (0, 0, 150), (255, 255, 245))  # Value thresholding is the easiest first step
     new_image = medianBlur(new_image, 13)
@@ -39,6 +40,7 @@ def process(image, logging=0):
              (0, 0, 255), thickness=3, lineType=8, shift=0)
 
     end = timeit.default_timer()
+    sausages = []
     print(f"Processing done in: {end - start}")
     return new_image, sausages
 

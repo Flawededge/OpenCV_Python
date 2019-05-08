@@ -1,5 +1,5 @@
 # # Compile code
-# pyinstaller -y -w -i "C:/Users/Ben/PycharmProjects/OpenCV_Python/example.ico" --add-data "C:/Users/Ben/PycharmProjects/OpenCV_Python/example.png";"." --add-data "C:/Users/Ben/PycharmProjects/OpenCV_Python/HSV.png";"." "C:/Users/Ben/PycharmProjects/OpenCV_Python/main.py"
+# pyinstaller -y -i "C:/Users/Ben/PycharmProjects/OpenCV_Python/sausage.ico" --add-data "C:/Users/Ben/PycharmProjects/OpenCV_Python/referenceImage.png";"." "C:/Users/Ben/PycharmProjects/OpenCV_Python/main.py"
 
 import os
 os.system("pyuic5 mainwindow.ui > mainwindow.py")
@@ -13,6 +13,9 @@ import tkinter as tk            # For file dialog
 from tkinter import filedialog  # For file dialog
 import processing
 import numpy as np
+import tsp
+import timeit
+import random
 
 
 class MainPlotGui(Ui_OpenCVThresholder):
@@ -42,6 +45,7 @@ class MainPlotGui(Ui_OpenCVThresholder):
         # Connecting GUI elements to functions
         self.bLoad.pressed.connect(self.load_file)
         self.bSave.pressed.connect(self.save_file)
+        self.bMeme.pressed.connect(self.load_meme)
 
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
@@ -78,8 +82,12 @@ class MainPlotGui(Ui_OpenCVThresholder):
         self.loading = 0
 
     def save_file(self):  # Saves the processedImage to output.png
-        imwrite("output.png", self.processedImage)
+        tmp = cvtColor(self.processedImage, COLOR_BGR2RGB)
+        imwrite("output.png", tmp)
 
+    def load_meme(self):
+        self.currentFilename = f"meme{random.randint(0, 10)}.jpg"
+        self.load_image()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
