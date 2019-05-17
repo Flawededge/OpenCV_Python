@@ -1,6 +1,0 @@
-PyQt5-sip
-PyQt5
-numpy
-opencv-python
-opencv-contrib-python
-tsp
