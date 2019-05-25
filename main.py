@@ -37,6 +37,7 @@ class MainPlotGui(Ui_PlateFinder):
 
         # Connections to relate buttons to functions
         self.bLoad.pressed.connect(self.load_image)
+        self.bClr.pressed.connect(self.clear_plates)
 
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
@@ -73,6 +74,8 @@ class MainPlotGui(Ui_PlateFinder):
 
         print("Finished")
 
+    def clear_plates(self):
+        self.plateList.clear()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
