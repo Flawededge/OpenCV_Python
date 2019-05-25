@@ -6,9 +6,9 @@ def process(image):
     box_image = image
 
     frame_hsl = cv2.cvtColor(box_image, cv2.COLOR_BGR2HLS)
-    frame_threshold = cv2.inRange(frame_hsl, (0, 0, 136), (255, 255, 221))
+    frame_threshold = cv2.inRange(frame_hsl, (0, 136, 0), (255, 221, 255))
 
-    final_image = cv2.cvtColor(frame_threshold, cv2.COLOR_HSL2BGR)  # done when licence plate has been found
+    final_image = cv2.cvtColor(frame_threshold, cv2.COLOR_GRAY2BGR)  # done when licence plate has been found
     box_image = final_image
 
     lic_image = image
