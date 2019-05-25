@@ -6,36 +6,73 @@
 
 import sys  # Forgot where I actually used this, but it's here
 from PyQt5 import QtWidgets, QtGui, QtCore  # QT stuff
-from mainwindow import Ui_OpenCVThresholder  # Import UI
-from cv2 import *  # OpenCV
+from mainwindow import Ui_PlateFinder  # Import UI
+import cv2  # OpenCV
 import processing
+import importlib
+import tkinter as tk  # For file dialog
+from tkinter import filedialog
 
 
-class MainPlotGui(Ui_OpenCVThresholder):
-
+class MainPlotGui(Ui_PlateFinder):
     # The class variables which are used to pass things around
+    filePath = "photos/image (3).jpg"
+    originImage = None  # To store the input image for on the fly processing
+
+    imagePositions = []
 
     def __init__(self, dialog):  # Initialization function
         # Set up the GUI
-        Ui_OpenCVThresholder.__init__(self)
+        Ui_PlateFinder.__init__(self)
         self.setupUi(dialog)
         # Load the image and put onto the GUI
-        # self.process_image()
+        self.imagePositions = [self.inImg, self.plateImg]
 
         # Update timer to occasionally process the image
-        self.checkThreadTimer = QtCore.QTimer()
-        self.checkThreadTimer.setInterval(1000)  # .5 seconds
+        # self.checkThreadTimer = QtCore.QTimer()
+        # self.checkThreadTimer.setInterval(1000)  # .5 seconds
+        #
+        # self.checkThreadTimer.timeout.connect(self.process_image)
+        # self.checkThreadTimer.start(1000)
 
-        self.checkThreadTimer.timeout.connect(self.process_image)
-        self.checkThreadTimer.start(1000)
-
+        # Connections to relate buttons to functions
+        self.originImage = cv2.imread(self.filePath)
+        # self.disp_image(self.originImage, 0)
+        self.process_image()
+        # self.process_image()
 
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
-        self.processedImage, sausages = processing.process(self.inputImage)  # Run the function
-        self.processedImage, self.path = processing.path(self.processedImage, sausages)
-        self.disp_image(self.processedImage)  # Show final output
+        box_image, plate_image = processing.process(self.originImage)  # Run the function
 
+        self.disp_image(box_image, 0)  # Show final output
+        self.disp_image(plate_image, 1)
+
+    def disp_image(self, image, position):  # Display images on screen 0 top, 1 bottom  BGR IMAGE IS EXPECTED!
+        height, width, channel = image.shape
+        bytesPerLine = 3 * width
+        pix = QtGui.QPixmap(QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888).rgbSwapped())
+        # imgIn = QtGui.QImage((uchar *) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888);
+        # pix = QtGui.QPixmap(QtGui.QImage(image, image.shape[1], image.shape[0],
+        #                                  image.shape[1] * 3, QtGui.QImage.Format_RGB888))
+        if position:
+            self.plateImg.setPixmap(pix)
+        else:
+            self.inImg.setPixmap(pix)
+
+    def load_image(self):
+        # Create tkinter window then hide
+        root = tk.Tk()
+        root.withdraw()
+
+        # Get filename and check that it's valid
+        input = filedialog.askopenfilename()
+        if ["png", "jpg"] in input[:-3]:
+            self.filePath = input
+            self.originImage = cv2.imread(input, 0)
+            self.process_image()
+        else:
+            return
 
 
 if __name__ == '__main__':
