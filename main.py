@@ -16,7 +16,7 @@ from tkinter import filedialog
 
 class MainPlotGui(Ui_PlateFinder):
     # The class variables which are used to pass things around
-    filePath = "photos/image (3).jpg"
+    filePath = "C:/Users/Ben/PycharmProjects/OpenCV_Python/photos/image (3).jpg"
     originImage = None  # To store the input image for on the fly processing
 
     imagePositions = []
@@ -26,20 +26,17 @@ class MainPlotGui(Ui_PlateFinder):
         Ui_PlateFinder.__init__(self)
         self.setupUi(dialog)
         # Load the image and put onto the GUI
-        self.imagePositions = [self.inImg, self.plateImg]
+        self.originImage = cv2.imread(self.filePath)
 
         # Update timer to occasionally process the image
-        # self.checkThreadTimer = QtCore.QTimer()
-        # self.checkThreadTimer.setInterval(1000)  # .5 seconds
-        #
-        # self.checkThreadTimer.timeout.connect(self.process_image)
-        # self.checkThreadTimer.start(1000)
+        self.checkThreadTimer = QtCore.QTimer()
+        self.checkThreadTimer.setInterval(1000)  # 1 second
+
+        self.checkThreadTimer.timeout.connect(self.process_image)
+        self.checkThreadTimer.start(1000)
 
         # Connections to relate buttons to functions
-        self.originImage = cv2.imread(self.filePath)
-        # self.disp_image(self.originImage, 0)
-        self.process_image()
-        # self.process_image()
+        self.bLoad.pressed.connect(self.load_image)
 
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
@@ -66,13 +63,15 @@ class MainPlotGui(Ui_PlateFinder):
         root.withdraw()
 
         # Get filename and check that it's valid
-        input = filedialog.askopenfilename()
-        if ["png", "jpg"] in input[:-3]:
-            self.filePath = input
-            self.originImage = cv2.imread(input, 0)
-            self.process_image()
+        user = filedialog.askopenfilename()
+        if user[-3:].lower() == "jpg" or user[-3:].lower() == "png":
+            self.filePath = user
+            self.originImage = cv2.imread(self.filePath)
         else:
+            print("No boueno")
             return
+
+        print("Finished")
 
 
 if __name__ == '__main__':
