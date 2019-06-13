@@ -11,12 +11,14 @@ import cv2  # OpenCV
 import processing
 import importlib
 import tkinter as tk  # For file dialog
+
+
 from tkinter import filedialog
 
 
 class MainPlotGui(Ui_PlateFinder):
     # The class variables which are used to pass things around
-    filePath = "C:/Users/Ben/PycharmProjects/OpenCV_Python/photos/image (3).jpg"
+    filePath = "photos/image (3).jpg"
     originImage = None  # To store the input image for on the fly processing
 
     imagePositions = []
@@ -49,7 +51,8 @@ class MainPlotGui(Ui_PlateFinder):
     def disp_image(self, image, position):  # Display images on screen 0 top, 1 bottom  BGR IMAGE IS EXPECTED!
         height, width, channel = image.shape
         bytesPerLine = 3 * width
-        pix = QtGui.QPixmap(QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888).rgbSwapped())
+        r = QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
+        pix = QtGui.QPixmap(r.rgbSwapped())
         # imgIn = QtGui.QImage((uchar *) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888);
         # pix = QtGui.QPixmap(QtGui.QImage(image, image.shape[1], image.shape[0],
         #                                  image.shape[1] * 3, QtGui.QImage.Format_RGB888))
