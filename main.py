@@ -31,11 +31,11 @@ class MainPlotGui(Ui_PlateFinder):
         self.originImage = cv2.imread(self.filePath)
 
         # Update timer to occasionally process the image
-        self.checkThreadTimer = QtCore.QTimer()
-        self.checkThreadTimer.setInterval(1000)  # 1 second
-
-        self.checkThreadTimer.timeout.connect(self.process_image)
-        self.checkThreadTimer.start(1000)
+        # self.checkThreadTimer = QtCore.QTimer()
+        # self.checkThreadTimer.setInterval(1000)  # 1 second
+        #
+        # self.checkThreadTimer.timeout.connect(self.process_image)
+        # self.checkThreadTimer.start(1000)
 
         # Connections to relate buttons to functions
         self.bLoad.pressed.connect(self.load_image)
@@ -74,7 +74,7 @@ class MainPlotGui(Ui_PlateFinder):
         else:
             print("No boueno")
             return
-
+        self.process_image()
         print("Finished")
 
     def clear_plates(self):
