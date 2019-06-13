@@ -32,11 +32,14 @@ def process(img):
 
     box_image = img
 
+
+
     lic_image = deepcopy(cv2.cvtColor(lic_image, cv2.COLOR_BGR2GRAY))
     th3 = cv2.adaptiveThreshold(lic_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 2)
 
     liplate_detect = pytesseract.image_to_string(th3)
 
     print(f"Current: {liplate_detect}")
+    lic_image = deepcopy(cv2.cvtColor(lic_image, cv2.COLOR_GRAY2BGR))
 
     return box_image, lic_image
