@@ -46,7 +46,13 @@ class MainPlotGui(Ui_PlateFinder):
 
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
-        box_image = processing.process(self, copy(self.originImage))  # Run the function
+        mostCommon = processing.process(self, copy(self.originImage))  # Run the function\
+
+        for i in mostCommon:
+            item = QtWidgets.QListWidgetItem(i)
+            self.plateList.addItem(item)
+
+        QtWidgets.QListWidgetItem()
 
         # self.disp_image(box_image, 0)  # Show final output
 

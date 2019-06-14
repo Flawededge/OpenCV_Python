@@ -25,17 +25,19 @@ def process(self, image):
 
     print("Tesseract|", end="")  # Detect the contents of each detected region
     workingImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    detected = []
+
+    mostCommon = []
     out_image = None
     # expandAmount = 0.03
-    for expandAmount in arange(0.03, -0.01, -0.002):
-        for (x, y, w, h) in liplates:
-            x -= int(pixWid*expandAmount)
-            y -= int(pixWid*expandAmount)
-            w += int(pixWid*expandAmount*2)
-            h += int(pixWid*expandAmount*2)
-            image = cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            lic_image = workingImage[int(y):int(y + h), int(x):int(x + w)]  # Crop the current square
+    for (x, y, w, h) in liplates:
+        detected = []
+        for expandAmount in arange(0.03, -0.01, -0.002):
+            xCur = x - int(pixWid*expandAmount)
+            yCur = y - int(pixWid*expandAmount)
+            wCur = w + int(pixWid*expandAmount*2)
+            hCur = h + int(pixWid*expandAmount*2)
+            image = cv2.rectangle(image, (xCur, yCur), (xCur + wCur, yCur + hCur), (0, 0, 255), 2)
+            lic_image = workingImage[int(yCur):int(yCur + hCur), int(xCur):int(xCur + wCur)]  # Crop the current square
             lic_image = cv2.adaptiveThreshold(lic_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 2)
 
             cur = (pytesseract.image_to_string(lic_image))
@@ -45,17 +47,17 @@ def process(self, image):
             self.disp_image(cv2.cvtColor(lic_image, cv2.COLOR_GRAY2BGR), 1)
             self.disp_image(image, 0)  # Show final output
             QGuiApplication.processEvents()
-            image = cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            image = cv2.rectangle(image, (xCur, yCur), (xCur + wCur, yCur + hCur), (255, 0, 0), 2)
             if len(cur) < 3:
                 continue
             print(f"{cur}|", end='')
             detected.append(cur)
 
-    if len(detected) > 0:
-        mostCommon = most_common(detected)
-        print(f" → {mostCommon} → ", end='')
-    else:
-        print("→ Nothing found → ", end='')
+        if len(detected) > 0:
+            mostCommon.append(most_common(detected))
+            print(f" → {mostCommon} → ", end='')
+        else:
+            print("→ Nothing found → ", end='')
     #     if len(detected) > 0:
     #         out_image = copy(workingImage[int(y):int(y + h), int(x):int(x + w)])
     #         break
@@ -67,7 +69,7 @@ def process(self, image):
     # out_image = cv2.cvtColor(out_image, cv2.COLOR_GRAY2BGR)
 
     print(" Processing done!")
-    return image
+    return mostCommon
 
 def most_common(L):
     # get an iterable of (item, iterable) pairs
