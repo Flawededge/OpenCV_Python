@@ -11,6 +11,7 @@ import cv2  # OpenCV
 import processing
 import importlib
 import tkinter as tk  # For file dialog
+from copy import copy
 
 
 from tkinter import filedialog
@@ -18,7 +19,7 @@ from tkinter import filedialog
 
 class MainPlotGui(Ui_PlateFinder):
     # The class variables which are used to pass things around
-    filePath = "photos/image (3).jpg"
+    filePath = "photos/image (2).jpg"
     originImage = None  # To store the input image for on the fly processing
 
     imagePositions = []
@@ -29,6 +30,7 @@ class MainPlotGui(Ui_PlateFinder):
         self.setupUi(dialog)
         # Load the image and put onto the GUI
         self.originImage = cv2.imread(self.filePath)
+        self.process_image()
 
         # Update timer to occasionally process the image
         # self.checkThreadTimer = QtCore.QTimer()
@@ -41,12 +43,12 @@ class MainPlotGui(Ui_PlateFinder):
         self.bLoad.pressed.connect(self.load_image)
         self.bClr.pressed.connect(self.clear_plates)
 
+
     def process_image(self):
         importlib.reload(processing)  # Reload the processing file to make testing easier
-        box_image, plate_image = processing.process(self.originImage)  # Run the function
+        box_image = processing.process(self, copy(self.originImage))  # Run the function
 
-        self.disp_image(box_image, 0)  # Show final output
-        self.disp_image(plate_image, 1)
+        # self.disp_image(box_image, 0)  # Show final output
 
     def disp_image(self, image, position):  # Display images on screen 0 top, 1 bottom  BGR IMAGE IS EXPECTED!
         height, width, channel = image.shape
